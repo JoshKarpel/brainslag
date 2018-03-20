@@ -1,0 +1,6 @@
+[package]
+name = "brainslag"
+version = "0.1.0"
+authors = ["jtk"]
+
+[dependencies]
