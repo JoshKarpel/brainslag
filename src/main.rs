@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::prelude::*;
+use std::process::Command;
 
 fn main() {
     let tokens = tokenize("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.");
@@ -8,8 +9,10 @@ fn main() {
     let generated_code = generate(&tokens);
     println!("{}", generated_code);
 
-    let mut outfile = File::create("output.c").expect("fuck");
-    outfile.write(generated_code.as_bytes());
+    let mut outfile = File::create("output.c").expect("failed to open outfile");
+    outfile.write(generated_code.as_bytes()).expect("failed to write outfile");
+
+    let cmd_output = Command::new("gcc").arg("-o").arg("bf").arg("output.c").output().expect("fuck");
 }
 
 #[derive(Debug, PartialEq, Copy, Clone)]
